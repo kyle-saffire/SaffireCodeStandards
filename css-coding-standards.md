@@ -23,6 +23,7 @@ CSS Coding Standards you must conform to when writing CSS in Saffire projects.
 - [TODO Comments](#todo-comments)
 - [Classes & IDs](#classes-&-ids)
 - [Preprocessors](#preprocessors)
+- [Organization](#organization)
 
 ## Overview
 
@@ -50,10 +51,11 @@ Strive to make your code:
 - performant
 - maintainable
 - interoperable
+- DRY (Don't Repeat Yourself)
 
 ## Naming Conventions
 
-Always use hyphens in class names. Do not use underscores or CamelCase notation.
+Always use hyphens in class names (kebab-case). Do not use underscores or camelCase notation.
 
 ```css
 /* Correct */
@@ -61,7 +63,7 @@ Always use hyphens in class names. Do not use underscores or CamelCase notation.
 
 /* Wrong */
 .sec_nav
-.SecNav
+.secNav
 ```
 
 ## Brackets
@@ -113,7 +115,7 @@ CSS properties should be grouped by commonality (display, then box-model, then p
   position: absolute;
   top: 22px;
   left: -12px;
-  color: #ffffff;
+  color: #fff;
   font: 12/1.2 normal Helvetica, Arial, san-serif;
   text-transform: uppercase;
   text-indent: 0;
@@ -232,6 +234,7 @@ When properties can have multiple values, each value should be separated with a 
 
 ## Positioning
 
+
 Do not use absolute positioning to layout the main sections of a page. When using positioning in CSS, leave a comment describing the context.
 
 ```html
@@ -256,6 +259,10 @@ Do not use absolute positioning to layout the main sections of a page. When usin
   bottom: 20px;
 }
 ```
+
+### Flexbox
+
+Use Flexbox for layout where it makes sense to, instead absolute position and floats when positioning elements and centering / aligning things.
 
 ## Clearing Floats
 
@@ -285,6 +292,7 @@ All floats should be cleared using the micro clearfix syntax.
 
 - <http://nicolasgallagher.com/micro-clearfix-hack/>
 - <https://css-tricks.com/all-about-floats/>
+
 
 ## Document Flow
 
@@ -337,7 +345,7 @@ Mark todos and action items with a comment that includes `TODO`. Be sure that `T
 ```css
 /* TODO - Review content styles */
 .selector {
-    color: #ff0000;
+  color: #ff0000;
 }
 ```
 
@@ -370,6 +378,14 @@ Acceptable uses for `id` include:
 
 ## Preprocessors
 
+### Keep the SASS files SASS-y
+
+Use SCSS syntax.
+
+Avoid writing vanilla CSS in the .SCSS files in all cases where it makes sense to utilize SASS/SCSS.
+
+Don't copy/paste compiled SASS into the .SCSS files.
+
 ### Property Order
 - Always place `@extend` statements on the first lines of a declaration block.
 - Where possible, group `@include` statements at the top of a declaration block, after any `@extend` statements.
@@ -397,6 +413,42 @@ Acceptable uses for `id` include:
 ```
 
 ### Nesting
+
+Nest selectors in cases whenever it makes sense for them to be nested. This helps keep the code more organized and DRY.
+
+```scss
+/* Correct */
+.selector {
+  display: block;
+  background: #333;
+  .other-rule {
+    color: #fff;
+  }
+  ul {
+    padding: 0;
+    li {
+      list-style-type: none;
+    }
+  }
+}
+
+/* Wrong */
+.selector {
+  display: block;
+  background: #333;
+}
+.selector .other-rule {
+  color: #fff;
+}
+.selector ul {
+  padding: 0;
+}
+.selector ul li {
+  list-style-type: none;
+}
+
+```
+
 Limit nesting to 3 level deep. This prevents overly-specific CSS selectors.
 - Avoid large numbers of nested rules. Avoid nesting that spreads over more than 50 lines.
 
@@ -409,6 +461,49 @@ Limit nesting to 3 level deep. This prevents overly-specific CSS selectors.
   }
 }
 ```
+
+### Organization
+
+Try to organize CSS rules by layout position or component/section/widget/etc.
+
+
+```scss
+/* Correct */
+.header {
+  display: block;
+}
+.top-container {
+  margin: 0 auto;
+}
+.middle-container {
+  padding: 0;
+}
+.lower-container {
+  display: block;
+}
+.footer {
+  color: #fff;
+}
+
+/* Wrong */
+.middle-container {
+  padding: 0;
+}
+.header {
+  display: block;
+}
+.top-container {
+  margin: 0 auto;
+}
+.footer {
+  color: #fff;
+}
+.lower-container {
+  display: block;
+}
+
+```
+
 
 ### Comments
 
