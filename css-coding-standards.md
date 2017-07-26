@@ -462,7 +462,12 @@ Limit nesting to 3 level deep. This prevents overly-specific CSS selectors.
 }
 ```
 
-### Organization
+
+### Comments
+
+Comments in all scss files should be done with `//` syntax so they are not compiled into production code.
+
+## Organization
 
 Try to organize CSS rules by layout position or component/section/widget/etc.
 
@@ -503,8 +508,3 @@ Try to organize CSS rules by layout position or component/section/widget/etc.
 }
 
 ```
-
-
-### Comments
-
-Comments in all scss files should be done with `//` syntax so they are not compiled into production code.
